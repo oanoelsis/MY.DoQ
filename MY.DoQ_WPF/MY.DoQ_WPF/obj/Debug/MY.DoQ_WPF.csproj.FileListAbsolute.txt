@@ -1,0 +1,16 @@
+c:\users\user\documents\visual studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\bin\Debug\MY.DoQ_WPF.exe.config
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\bin\Debug\MY.DoQ_WPF.exe
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\bin\Debug\MY.DoQ_WPF.pdb
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MY.DoQ_WPF.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MainWindow.baml
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MainWindow.g.cs
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\App.g.cs
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MY.DoQ_WPF_MarkupCompile.cache
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MY.DoQ_WPF.g.resources
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MY.DoQ_WPF.Properties.Resources.resources
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MY.DoQ_WPF.csproj.GenerateResource.Cache
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MY.DoQ_WPF.exe
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\MY.DoQ_WPF.pdb
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\bin\Debug\Newtonsoft.Json.dll
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\bin\Debug\Newtonsoft.Json.xml
+C:\Users\user\Documents\Visual Studio 2012\Projects\MY.DoQ_WPF\MY.DoQ_WPF\obj\Debug\listboxitem.baml

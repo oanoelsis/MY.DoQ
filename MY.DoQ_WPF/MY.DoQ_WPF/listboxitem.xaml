@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <DataTemplate x:Key="templateListBoxItem">
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0"
+                    Grid.Row="0"
+                    Margin="0,0,10,0">
+                <Image Source="{Binding Path=fav_image}"
+                       Stretch="Uniform"
+                       Height="30"
+                       Width="30"></Image>
+            </Border>
+            <Border Grid.Column="1"
+                    Grid.Row="0"
+                    Margin="0,0,10,0">
+                <Image Source="{Binding Path=format_image}"
+                       Stretch="Uniform"
+                       Height="30"
+                       Width="30"></Image>
+            </Border>
+            <TextBlock Margin="0,5,0,0" Text="{Binding Path=name}" Grid.Column="2" Grid.Row="0"></TextBlock>
+        </Grid>
+        
+    </DataTemplate>
+    
+    <Style x:Key="styleListBox" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemTemplate" Value="{StaticResource ResourceKey=templateListBoxItem}"></Setter>
+    </Style>
+    
+    
+</ResourceDictionary>

@@ -1,0 +1,164 @@
+package E5_ver1;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
+import org.apache.tika.exception.TikaException;
+import org.json.simple.JSONObject;
+import org.xml.sax.SAXException;
+
+
+public class LuceneTester {
+
+	String indexDir = "C:\\Users\\user\\Documents\\lucene_example\\index";
+	String dataDir = "C:\\Users\\user\\Documents\\lucene_example\\sample_document";
+	Indexer indexer;
+	Searcher searcher;
+	static WriteFile WriteFile;
+	static String title_keyword_depth1;
+	static String title_keyword_depth2;
+	static String content_keyword_depth1;
+	static int isMainSearch = 1;
+	private static TcpIpServer tcpIpServer;
+	static StringBuffer ForSend_buf;
+	static String ForSend_string;
+	static JSONObject ForSend_json;
+	
+	public static void main(String[] args) throws SAXException, TikaException{
+		LuceneTester tester;
+		try{
+			
+			
+			tester = new LuceneTester();
+			WriteFile = new WriteFile();
+			Scanner scanner = new Scanner(System.in);
+			System.out.print("Index(y/n):");
+			String IndexOrNot = scanner.nextLine();
+			if(IndexOrNot.compareTo("y")==0){
+				tester.createIndex();
+			}
+			scanner.close();
+			//Setup the tcpip server for query form c#
+			tcpIpServer = new TcpIpServer();
+			tcpIpServer.setup(8080);
+			tcpIpServer.accept();
+			
+			while(true){
+				// 2차 ,3차 검색을 위해 키워드를 모아놓는 스트링 어레이
+				//LuceneTester.title_keyword_depth1 = new String[10];
+				//Lucene.content_keyword_depth1 = new String[10];
+				
+				//for command-lines searching interface
+				String input = "";
+				
+				ForSend_string = "[Search Result]\r\n";
+				ForSend_buf = new StringBuffer("[Search Result]\r\n");
+				ForSend_json = new JSONObject();	
+				//ForSend_json.put("search result", "this");
+				
+				
+				System.out.print("search: ");
+				input = tcpIpServer.read();
+
+				System.out.println("input: "+input);
+				
+				
+				/* command-line interface version
+				if(scanner.hasNextLine()){
+					input = scanner.nextLine();
+				}
+				if (input.compareTo("q!")==0){
+					break;
+				}
+				*/
+				
+				
+				
+				/* First Search(Main Search) */
+				tester.search(input);
+				/******************************/
+				/* title_keyword_depth1 search */
+				// 지금 여기서 string이 NULL인 경우 NULL pointer exception발생함.
+				tester.search(title_keyword_depth1);
+				/* title_keyword_depth2 search */
+				tester.search(title_keyword_depth2);
+				
+				/* C#으로 send  */
+				//tcpIpServer.write(ForSend_buf.toString());
+				WriteFile.write(ForSend_json.toJSONString());
+				tcpIpServer.write(ForSend_string);
+				//WriteFile.write(ForSend_string);
+				//System.out.println(ForSend_buf.toString());
+
+				//tcpIpServer.write(ForSend_json.toString());
+				//System.out.println(ForSend_json.toString());
+				//System.out.println(ForSend_json.toJSONString());
+				isMainSearch = 1;
+			}
+		} catch(IOException e){
+			e.printStackTrace();
+		} catch(ParseException e){
+			e.printStackTrace();
+		}
+	}
+	 
+	private void createIndex() throws IOException, SAXException, TikaException{
+		indexer = new Indexer(indexDir);
+		int numIndexed;
+		long startTime = System.currentTimeMillis();
+		numIndexed = indexer.createIndex(dataDir, new TextFileFilter());
+		long endTime = System.currentTimeMillis();
+		indexer.close();
+		System.out.println(numIndexed+"File indexed, time taken: "+(endTime-startTime)+" ms");
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void search(String searchQuery) throws IOException, ParseException{
+		searcher = new Searcher(indexDir);
+		long startTime = System.currentTimeMillis();
+		TopDocs hits = searcher.search(searchQuery);
+		long endTime = System.currentTimeMillis();
+		
+		ForSend_json.put("query", searchQuery);
+		System.out.println(hits.totalHits + " documents found. Time :"+(endTime-startTime));
+		
+		//첫번쨰로 매칭된 문서를 기준으로 재검색.
+		if(isMainSearch==1){
+			if(hits.totalHits > 0){
+				title_keyword_depth1 = (searcher.getDocument(hits.scoreDocs[0])).get("name");
+				System.out.println("title_keyword_depth1: "+title_keyword_depth1);
+				ForSend_buf.append("title_keyword_depth1: "+title_keyword_depth1+"\r\n");
+				ForSend_string += "title_keyword_depth1: " + title_keyword_depth1 + "\r\n";
+				ForSend_json.put("title_keyword_depth1", title_keyword_depth1);
+				if(hits.totalHits > 1){
+					title_keyword_depth2 = (searcher.getDocument(hits.scoreDocs[1]).get("name"));
+					System.out.println("title_keyword_depth2: "+title_keyword_depth2);		
+					ForSend_buf.append("title_keyword_depth2: "+title_keyword_depth2 + "\r\n");
+					ForSend_string += "title_keyword_depth2: " + title_keyword_depth2 + "\r\n";
+					ForSend_json.put("title_keyword_depth2", title_keyword_depth2);
+				}
+			}
+			isMainSearch = 0;
+		}
+		//
+		int i = 0;
+		for(ScoreDoc scoreDoc : hits.scoreDocs) {
+			i += 1;
+			Document doc = searcher.getDocument(scoreDoc);
+			//System.out.print(doc);
+			ForSend_buf.append(doc.get(LuceneConstants.FILE_PATH) + "\r\n");
+			ForSend_string += doc.get(LuceneConstants.FILE_PATH) + "\r\n";
+			ForSend_json.put("doc[" + i + "]", doc.get(LuceneConstants.FILE_PATH));
+			System.out.println("File: "+doc.get(LuceneConstants.FILE_PATH));
+		}
+		searcher.close();
+	}
+
+
+	
+}

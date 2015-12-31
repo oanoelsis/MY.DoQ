@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="C:/Users/user/Documents/MY.DoQ/lucene-3.6.2/lucene-core-3.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Documents/MY.DoQ/koreananalyzer.3x-20130430.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Documents/MY.DoQ/tika-app-1.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Documents/MY.DoQ/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Documents/MY.DoQ/java-h2tlib-a.1.0.3/Tika연동모듈/rcc.tikaparser-1.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Documents/MY.DoQ/java-h2tlib-a.1.0.3/Tika연동모듈/commons-io-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Documents/MY.DoQ/java-h2tlib-a.1.0.3/Lib/rcc.h2tlib-1.0.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
